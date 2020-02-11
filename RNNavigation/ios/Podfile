@@ -35,6 +35,8 @@ target 'RNNavigation' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+
   target 'RNNavigationTests' do
     inherit! :search_paths
     # Pods for testing

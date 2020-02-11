@@ -10,6 +10,7 @@ import {
 import {Text, Icon} from 'native-base';
 import {IMAGE} from '../../constants/Image';
 import {TextInput} from 'react-native-gesture-handler';
+import firebase from 'react-native-firebase';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -19,6 +20,9 @@ export class Login extends React.Component {
     this.state = {
       showPass: true,
       press: false,
+      email: '',
+      password: '',
+      isAuthenticated: 'not',
     };
   }
 
@@ -26,6 +30,21 @@ export class Login extends React.Component {
     return !this.state.press
       ? this.setState({showPass: false, press: true})
       : this.setState({showPass: true, press: false});
+  };
+
+  login = async () => {
+    const {email, password} = this.state;
+
+    try {
+      const user = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+
+      this.setState({isAuthenticated: true});
+      this.props.navigation.navigate('app');
+    } catch (err) {
+      this.setState({isAuthenticated: false});
+    }
   };
 
   render() {
@@ -47,9 +66,11 @@ export class Login extends React.Component {
             />
             <TextInput
               style={styles.input}
-              placeholder={'Username'}
+              placeholder={'Email'}
               placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
               underlineColorAndroid="transparent"
+              value={this.state.email}
+              onChangeText={email => this.setState({email})}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -65,6 +86,8 @@ export class Login extends React.Component {
               secureTextEntry={this.state.showPass}
               placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
               underlineColorAndroid="transparent"
+              value={this.state.password}
+              onChangeText={password => this.setState({password})}
             />
             <TouchableOpacity
               style={styles.btnEye}
@@ -76,9 +99,7 @@ export class Login extends React.Component {
               />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.btnLogin}
-            onPress={() => this.props.navigation.navigate('app')}>
+          <TouchableOpacity style={styles.btnLogin} onPress={this.login}>
             <Text style={styles.text}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -86,6 +107,11 @@ export class Login extends React.Component {
             onPress={() => this.props.navigation.navigate('Register')}>
             <Text style={styles.text}>Register</Text>
           </TouchableOpacity>
+          {!this.state.isAuthenticated ? (
+            <Text style={styles.wrongPassword}>Senha Inválida!</Text>
+          ) : (
+            <Text />
+          )}
         </ImageBackground>
       </View>
     );
@@ -171,5 +197,12 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 16,
     textAlign: 'center',
+  },
+  wrongPassword: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: '500',
+    marginTop: 10,
+    opacity: 0.8,
   },
 });

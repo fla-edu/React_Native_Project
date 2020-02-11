@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "732442408792",
+    "firebase_url": "https://nfc-system.firebaseio.com",
+    "project_id": "nfc-system",
+    "storage_bucket": "nfc-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732442408792:android:64c1115ad8cf06190b972d",
+        "android_client_info": {
+          "package_name": "com.rnnavigation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732442408792-n1si0abqptehjqgulvk7sctiqeg4augo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKTTdT-Q19tvRXCJG2frvLdd7puag46ks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "732442408792-n1si0abqptehjqgulvk7sctiqeg4augo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

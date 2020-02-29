@@ -16,8 +16,8 @@ export class SideMenu extends React.Component {
         </View>
         <ScrollView>
           <List>
-            <ListItem onPress={() => this.props.navigation.navigate('Setting')}>
-              <Text>Setting</Text>
+            <ListItem onPress={() => this.props.navigation.navigate('Inventario')}>
+              <Text>Inventário</Text>
             </ListItem>
             <ListItem onPress={() => this.props.navigation.navigate('Profile')}>
               <Text>Profile</Text>

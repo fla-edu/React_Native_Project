@@ -8,9 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Text, Icon} from 'native-base';
+import styled from 'styled-components';
 import {IMAGE} from '../../constants/Image';
 import {TextInput} from 'react-native-gesture-handler';
 import firebase from 'react-native-firebase';
+import Modal from 'react-native-modal';
 
 const {width: WIDTH} = Dimensions.get('window');
 
@@ -22,7 +24,8 @@ export class Login extends React.Component {
       press: false,
       email: '',
       password: '',
-      isAuthenticated: 'not',
+      isAuthenticated: false,
+      isModalVisible: false,
     };
   }
 
@@ -34,7 +37,13 @@ export class Login extends React.Component {
 
   login = async () => {
     const {email, password} = this.state;
+    //this.toggleModal();
 
+    if(email == '' || password == ''){
+      alert('Email ou Senha Inválido!');
+      return;
+    }
+    
     try {
       const user = await firebase
         .auth()
@@ -44,7 +53,13 @@ export class Login extends React.Component {
       this.props.navigation.navigate('app');
     } catch (err) {
       this.setState({isAuthenticated: false});
+      console.log(err);
+      alert('Email ou Senha Inválido!');
     }
+  };
+
+  toggleModal = () => {
+    this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
   render() {
@@ -53,10 +68,12 @@ export class Login extends React.Component {
         <ImageBackground
           source={IMAGE.BACKGROUND}
           style={styles.backgroundContainer}>
+
           <View style={styles.logoContainer}>
             <Image source={IMAGE.NFC} style={styles.logo} />
             <Text style={styles.logoText}>NFC System</Text>
           </View>
+
           <View style={styles.inputContainer}>
             <Icon
               name={'ios-person'}
@@ -73,6 +90,7 @@ export class Login extends React.Component {
               onChangeText={email => this.setState({email})}
             />
           </View>
+          
           <View style={styles.inputContainer}>
             <Icon
               name={'ios-lock'}
@@ -99,24 +117,76 @@ export class Login extends React.Component {
               />
             </TouchableOpacity>
           </View>
+
           <TouchableOpacity style={styles.btnLogin} onPress={this.login}>
             <Text style={styles.text}>Login</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.btnRegister}
             onPress={() => this.props.navigation.navigate('Register')}>
             <Text style={styles.text}>Register</Text>
           </TouchableOpacity>
-          {!this.state.isAuthenticated ? (
-            <Text style={styles.wrongPassword}>Senha Inválida!</Text>
-          ) : (
-            <Text />
-          )}
+
+          <Modal
+            style={styles.modal}
+            isVisible={this.state.isModalVisible}
+            animationType={'slide'}
+            transparent={true}
+            onRequestClose={() => {
+              this.toggleModal();
+            }}>
+            <Text style={styles.textTopModal}>Login Inválido</Text>
+            <Text style={styles.textModal}>Email ou Senha Incorretos</Text>
+            {/* <Button
+                onPress={this.toggleModal}> 
+              <Text>Clique Para Fechar o Modal</Text>
+            </Button> */}
+          </Modal>
         </ImageBackground>
       </View>
     );
   }
 }
+
+const Container = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  justify-content: center;
+  align-items: center;
+`;
+
+const ButtonView = styled.View`
+  background: #5263ff;
+  width: 295px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 10px 20px #c2cbff;
+`;
+
+const ButtonText = styled.Text`
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 20px;
+`;
+
+const Modala = styled.View`
+  position: absolute;
+  width: 335px;
+  height: 370px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  align-items: center;
+`
 
 const styles = StyleSheet.create({
   view: {
@@ -204,5 +274,47 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginTop: 10,
     opacity: 0.8,
+  },
+  containerModal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    // flex: 1,
+    // alignItems: 'center',
+    // backgroundColor: '#00ff00',
+    // padding: 100,
+    // width: '90%',
+    // height: '50%',
+    flex: 0.3,
+    // width: WIDTH - 55,
+    // height: 45,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    // shadowOffset:{  width: 10,  height: 10,  },
+    // shadowColor: 'black',
+    // shadowOpacity: 1.0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textModal: {
+    color: '#000000',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnModal: {
+    width: WIDTH - 55,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: '#0a1426',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  textTopModal: {
+    color: '#0a1426',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -12,7 +12,7 @@ import {
   Search,
   SearchDetail,
   Profile,
-  Setting,
+  Inventario,
   Login,
   Register,
 } from './src/component';
@@ -78,8 +78,8 @@ const MainStack = createStackNavigator(
       screen: MainTabs,
       navigationOptions: navOptionHandler,
     },
-    Setting: {
-      screen: Setting,
+    Inventario: {
+      screen: Inventario,
       navigationOptions: navOptionHandler,
     },
     Profile: {
@@ -106,7 +106,7 @@ const authStack = createStackNavigator({
     navigationOptions: navOptionHandler,
   },
   Register: {
-    screen: Register,
+    screen: Inventario,
     navigationOptions: navOptionHandler,
   },
 });

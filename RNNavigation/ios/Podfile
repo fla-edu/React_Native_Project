@@ -35,7 +35,10 @@ target 'RNNavigation' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
+  pod 'RNSoundPlayer', :path => '../node_modules/react-native-sound-player'
 
   target 'RNNavigationTests' do
     inherit! :search_paths

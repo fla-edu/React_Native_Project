@@ -4,8 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import io.invertase.firebase.RNFirebasePackage;
+import com.johnsonsu.rnsoundplayer.RNSoundPlayerPackage;
+import org.reactnative.camera.RNCameraPackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -37,8 +39,10 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new RNFirebasePackage(),
+            new RNSoundPlayerPackage(),
+            new RNCameraPackage(),
             new RNFirebaseAuthPackage(),
+            new RNFirebasePackage(),
             new ReanimatedPackage(),
             new RNGestureHandlerPackage(),
             new SafeAreaContextPackage() // <-- Add this line
